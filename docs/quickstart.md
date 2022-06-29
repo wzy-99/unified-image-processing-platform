@@ -7,5 +7,6 @@
 ## 部署
 - 在项目**根目录**运行`npm install`安装依赖库
 - 安装完成后，运行`npm run serve`在本地启动服务
+![构建成功](_images/npm-run-serve.jpg)
 - 运行`npm run electron:build`生成可执行文件（可选）
-
+![构建成功](_images/npm-run-electron-build.jpg)
