@@ -2,12 +2,7 @@
 
 > 以ImageReadBlock.vue为例。
 
-块分为实现应用功能的**子级块**和其继承的**父级块**、**祖先块**，
-- BaseBlock 祖先块
-  - InputBlock 父级块
-    - VideoReadBlock 子级块
-    - ImageReadBlock 子级块
-当Vue构建ImageReadBlock时，会先后生成BaseBlock、InputBlock、ImageReadBlock三个Node。
+
 
 ## 步骤
 
@@ -25,7 +20,7 @@ export default {
 
 2. 引入混入
 
-[混入](https://cn.vuejs.org/v2/guide/mixins.html)包括各种复用功能。
+[混入](https://cn.vuejs.org/v2/guide/mixins.html)用于实现功能的复用。
 
 ```js
 import BaseMixin from "@/components/blocks/BaseMixin.js";
