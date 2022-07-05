@@ -1,6 +1,6 @@
 # 如何开发块
 
-> 以ImageReadBlock.vue为例。
+> 以ImageReadBlock.vue为例
 
 
 
@@ -69,21 +69,24 @@ export default {
 }
 ```
 
+---
+
 # 如何开发混入
 
 > 以InputMixin.js为例
 
-混入分为两部分，一部分是基础**属性的开发**(InputPropertyMixin)，一部分是子级应用块**功能的开发**(InputFunctionMixin)。
+混入分为两部分，一部分是**控件属性选项的开发**`(InputPropertyMixin)`，一部分是**功能选项的开发**`(InputFunctionMixin)`。
 
 ## 步骤
 
-1. 开发混入基础属性
+1. 开发控件属性选项
 
-  混入基础属性由基础性的**计算属性**、**数据**组成。
+  控件属性选项由**计算属性**、**数据**等组成。
 
-  混入基础属性是父级块InputBlock和子级块ImageReadBlock都需要用到的属性，如isRunning属性表示当前块是否正在运行，父级块InputBlock需要此数据来控制界面的运行/暂停按钮。
+  控件属性选项是父级块`InputBlock`和子级块`ImageReadBlock`都需要用到的属性，如`isRunning`属性表示当前块是否正在运行，父级块`InputBlock`需要此数据来控制界面的运行/暂停按钮。
 
 ```js
+// InputMixin.js
 var InputPropertyMixin = {
   computed: {
     isRunning: { // 是否正在运行
@@ -101,13 +104,14 @@ var InputPropertyMixin = {
 }
 ```
 
-2. 开发混入的功能
+2. 开发功能选项
 
-  混入的功能由功能性计算属性、数据及方法组成。
+  功能选项由**计算属性**、**数据**及**方法**等组成。
 
-  混入的功能是父级块InputBlock不需要的，而子级块ImageReadBlock需要的，如readFileAsync同步读取文件方法，父级块InputBlock并不需要调用，父级块的本质是可复用的控件，所有的功能都有子级块完成。
+  功能选项是父级块`InputBlock`不需要的，而子级块`ImageReadBlock`需要的，如`readFileAsync`同步读取文件方法，父级块`InputBlock`并不需要调用。
 
 ```js
+// InputMixin.js
 var InputFunctionMixin = {
   methods: {
     readFileAsync(file) {
@@ -130,14 +134,14 @@ var InputFunctionMixin = {
 
 ```
 
-2. 导出
+3. 导出
 
 ```js
 export { BasePropertyMixin, BaseFunctionMixin } // 分别导出
 export default [BasePropertyMixin, BaseFunctionMixin] // 整体导出
 ```
 
-引入方式
+**引入方式**
 ```js
 // 单独引入
 import {BasePropertyMixin} from "@/components/blocks/BaseMixin"
@@ -147,4 +151,4 @@ import InputMixin from "@/components/blocks/InputMixin.js";
 
 ## 减少冗余
 
-采用基础属性与功能分离的开发模式，能够较少父级块的功能冗余，避免父级块注册不必要的方法，从而提高程序整体效率。
+采用控件属性与功能分离的开发模式，能够较少父级块的设计冗余，**避免父级块注册不必要的方法，从而提高程序整体效率**。

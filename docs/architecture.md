@@ -46,13 +46,13 @@
 
 > 以`ImageReadBlock.vue`为例
 
-- `BaseBlock` 父先块  
+- `BaseBlock` 父级块  
   - `InputBlock` 子级块  
     - `ImageReadBlock` 孙子级块  
 
-## 控件继承
+### 界面复用
 
-> `Vue`目前没有提供直接的控件继承方式，即一个子级控件不能直接将父级控件的内容“复制”到自己的内容区域，但`Vue`提供了`插槽机制`，使得子控件可以将自己的内容插入到父控件的内容区域，因此通过这种方式可以实现控件的复用。
+> `Vue`目前没有提供直接的界面继承方式，即一个子级控件不能直接将父级控件的内容“复制”到自己的内容区域，但`Vue`提供了`插槽机制`，使得子控件可以将自己的内容插入到父控件的内容区域，因此通过这种方式可以实现界面的复用。
 
 
 `Vue`提供了[插槽（slot）](https://cn.vuejs.org/v2/guide/components-slots.html)机制，父级块`BaseBlock`定义了块的**基本界面框架**，并设置`button`、`content`[具名插槽](https://cn.vuejs.org/v2/guide/components-slots.html#%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD)。子级块`InputBlock`可以将按键组件“填入”`button`槽内，或者是将内容组件“填入”`content`槽内。如果子级块后还有孙子级块，可以在子级块中再次设置插槽供孙子级块“填充”。
@@ -92,7 +92,7 @@
 </base-block>
 ```
 
-### 深入理解
+#### 深入理解
 
 当`Vue`构建`ImageReadBlock`时，会先后生成`BaseBlock`、`InputBlock`、`ImageReadBlock`三个`Node`实例。  
 
@@ -140,11 +140,49 @@ onDrag(x, y) {
 </base-block>
 ```
 
-## 功能复用
+### 功能复用
 
 > `Vue`提供了[extents](https://cn.vuejs.org/v2/api/index.html#extends)选项实现一个控件扩展另一个控件的属性、数据和方法，但这种复用方法会将父控件的所有方法等都扩展到子组件上，显然这是不合理的。我们通过[混入（Mixins）](https://cn.vuejs.org/v2/guide/mixins.html)实现自定义继承属性、数据和方法。
 
+`Vue`提供了[混入（Mixins）](https://cn.vuejs.org/v2/guide/mixins.html)机制，父级块`BaseBlock`通过`BaseMixin.js`定义了大量可复用属性及方法，子级块`InputBlock`和孙子级块`ImageReadBlock`可通过`混入`进行扩展。  
 
+`BaseMixin.js`中分为两个部分：一个部分是控件属性选项`BasePropertyMixin`，如`tag`信息、`block`信息、`buffer`缓冲区等，这一部分选项是各级块都需要的；另一部分是功能选项`BaseFunctionMixin`，如`cycleBuffer`数据、`recv`方法、`post`方法等，这一部分选项不是每级块都需要的。  
 
+```js
+// BaseMixin.js
+var BasePropertyMixin = {
+  props: {
+    index: {
+      // ...
+    },
+    tagIndex: {
+      // ...
+    }
+  }, 
+  computed: {
+    tag() {
+      // ...
+    },
+    block() {
+      // ...
+    },
+    buffer: {
+      // ...
+    },
+  },
+}
 
-BaseBlock 基础块是所有块的基础
+var BaseFunctionMixin = {
+  methods: {
+    async recv(pack) {
+      // ...
+    },
+    async post(pack, ids) {
+      // ...
+    },
+  },
+}
+
+export { BasePropertyMixin, BaseFunctionMixin }
+export default [BasePropertyMixin, BaseFunctionMixin]
+```
