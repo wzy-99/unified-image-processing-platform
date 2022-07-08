@@ -10,3 +10,17 @@
 ![构建成功](_images/npm-run-serve.jpg)
 - 运行`npm run electron:build`生成可执行文件（可选）
 ![构建成功](_images/npm-run-electron-build.jpg)
+
+<!-- ## opencv4nodejs
+
+1. install opencv release, which can be found here, the version I used is 3.4.x
+
+2. disable auto build
+
+```bash
+OPENCV4NODEJS_DISABLE_AUTOBUILD=1
+```
+
+3.set system environmental variables
+
+![环境变量](_images/npm-run-serve.jpg) -->
