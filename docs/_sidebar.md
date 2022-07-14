@@ -3,5 +3,11 @@
   * [快速入门](quickstart.md)
   * [整体架构](architecture.md)
   * [如何开发](delelopment.md)
-  * [基础块](baseblock.md)
   * [状态管理](store.md)
+- API
+  * [基础块](baseblock.md)
+  * [输入块](inputblock.md)
+  * [图像读取块](imagereadblock.md)
+- 任务配置
+  * [任务配置文件](taskconfig.md)
+  * [图像读取块](imagereadconfig.md)

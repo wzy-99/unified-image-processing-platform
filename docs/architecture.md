@@ -38,7 +38,7 @@
 <img src="_images/block-connection.svg" />
 </div>
 
-块控件通过**状态管理模式**注入块数据，通过**混入(Mixin)** 方式加载逻辑功能，块采用**双向数据流**，能够对注入的数据直接进行修改，每个块可以直接向下级块传输数据。参数控件为**单例模式(Singleton)** ，即软件运行时只会产生一个参数控件实例，块通过事件打开参数控件。上级工作区通过状态管理模式添加、删除节点块数据。
+块控件通过**状态管理模式**注入块数据，通过**混入(Mixin)** 方式加载逻辑功能，块采用**双向数据流**，能够对注入的数据直接进行修改，每个块可以直接向下级块传输数据。参数控件为**单例模式(Singleton)** ，即软件运行时只会产生一个参数控件实例，块通过事件打开参数控件。工作区通过状态管理模式添加、删除节点块数据。
 
 ## 块继承
 
@@ -49,6 +49,8 @@
 - `BaseBlock` 父级块  
   - `InputBlock` 子级块  
     - `ImageReadBlock` 孙子级块  
+
+**注意：**父级与子级是两个块的继承关系，例如`BaseBlock`和`InputBlock`两者为父子关系，而上级和下级是指两个块数据流向关系，例如`ImageReadBlock`和`ImageVisualBlock`是上下级关系，数据首先从`ImageReadBlock`读入然后在`ImageVisualBlock`进行可视化。
 
 ### 界面复用
 
@@ -131,7 +133,7 @@ onDrag(x, y) {
     },
 ```
 
-但是这种方法比较低效，一种高效的方法是通过`v-on="$listeners"`将所有来自下级`ImageReadBlock`的监听直接绑定到上级`BaseBlock`。  
+但是这种方法比较低效，一种高效的方法是通过`v-on="$listeners"`将所有来自子级`ImageReadBlock`的监听直接绑定到父级`BaseBlock`。  
 
 ```html
 <!-- InputBlock.vue -->
