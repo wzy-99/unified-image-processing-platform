@@ -1,4 +1,4 @@
-# 图像读取块
+# 视频读取块
 
 ## pos
 > 参考[pos](taskconfig.md#pos-objectx-int-y-int-w-int-h-int-z-int-require)。
@@ -16,7 +16,7 @@
     "type": "file-list",
     "value": [],
     "extra": {
-        "fileType": "image/*"
+        "fileType": "video/*"
     }
 }
 ```

@@ -11,3 +11,8 @@
 - 任务配置
   * [任务配置文件](taskconfig.md)
   * [图像读取块](imagereadconfig.md)
+  * [图像可视化块](imagevisualconfig.md)
+  * [视频读取块](videoreadconfig.md)
+  * [HTTP服务器请求块](httprequestconfig.md)
+- 设置组件
+  * FileList

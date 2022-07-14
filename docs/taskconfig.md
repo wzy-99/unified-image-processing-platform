@@ -3,53 +3,54 @@
 任务配置文件是具有规范格式的Json文件，其内容包含了各级块和任务的名称等。
 
 ## 字段
-任务配置文件包含`name`、`blockList`三个字段。
+任务配置文件包含`name`、`blockList`字段。
 
-### name: `String` required
-任务的名称
+### name: `String` *require*
+任务的名称。
 
-### blockList: `Array[Object]` required
-任务的所有块
+### blockList: `Array[Object]` *require*
+任务的所有块，详见[任务块](#任务块)。
 
-**注意** require 表明该字段是必须的
+**注意** *require* 表明该字段是必须的
 
 ---
 ## 任务块
 每个块必包含`id`、`type`、`pos`、`prop`字段，可能包含`param`字段。
 
-### id: `Int` require
-块的全局唯一标识
+### id: `Int` *require*
+块的全局唯一标识。
 
-### type: `String` require
-块的控件类型，用于构建vue组件。
+### type: `String` *require*
+块的控件类型，用于构建vue组件。  
 
-```html
-<!-- BlockPanel.vue -->
-<!-- component 为Vue模板组件，提供将type属性传入is，实现组件的实例化 -->
-<component
-    v-for="(block, index) in tag.blockList"
-    :is="block.type"
-    :index="index"
-    :tagIndex="tagIndex"
-/>
-```
-### pos: `Object{x: Int, y: Int, w: Int, h: Int, z: Int}` require
+### pos: `Object{x: Int, y: Int, w: Int, h: Int, z: Int}` *require*
 块的布局, 其中`x`为块的横坐标，`y`为块的纵坐标，`w`为块的宽度，`h`为块的高度，`z`为块的[层级](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index)。
 
-### prop: `Object` require
-块的属性，如块的下一级、块的服务器地址等。
+### prop: `Object` *require*
+块的属性，如块的下一级、块的服务器地址等，详见[属性](#属性（参数）)。
 
 ### pram: `Object`
-块向服务器发送的参数，如模型的置信率阈值参数等。
+块向服务器发送的参数，如模型的置信率阈值参数等，详见[参数](#属性（参数）)。
 
-**注意** require 表明该字段是必须的
+## 属性（参数）
+属性（参数）包含`name`、`type`、`value`、`extra`字段。
+
+### name: `String` *require*
+属性（参数）的名称。
+
+### type: `String` *require*
+属性（参数）的控件类型。
+
+### value: `Object | Number | String | Array` *require*
+属性（参数）的值。
+
+### extra: `Object`
+属性（参数）的控件的额外设置，如参数上限、参数下限、是否检查等。
 
 ## 示例
-
 ```json
 {
     "name": "图像测试",
-    "temp": {},
     "blockList": [
         {
             "id": 1,
@@ -78,7 +79,6 @@
                     ]
                 }
             },
-            "temp": {}
         },
         {
             "id": 2,
@@ -107,14 +107,6 @@
                     "name": "服务器地址",
                     "type": "el-input",
                     "value": "http://127.0.0.1:7777"
-                },
-                "batchSize": {
-                    "name": "一次发送量",
-                    "type": "el-input-number",
-                    "value": 1,
-                    "extra": {
-                        "clearable": true
-                    }
                 }
             },
             "param": {
@@ -132,7 +124,6 @@
                     "value": 256
                 }
             },
-            "temp": {}
         },
         {
             "id": 3,
@@ -145,7 +136,6 @@
                 "z": 11
             },
             "prop": {},
-            "temp": {}
         },
         {
             "id": 4,
@@ -176,7 +166,6 @@
                     "value": []
                 }
             },
-            "temp": {}
         },
         {
             "id": 5,
@@ -188,8 +177,6 @@
                 "h": 200,
                 "z": 11
             },
-            "prop": {},
-            "temp": {}
         }
     ]
 }
